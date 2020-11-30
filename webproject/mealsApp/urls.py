@@ -1,10 +1,11 @@
 from django.urls import path, include
-from . import views
+from .views import MealsView, IngredientsView, index
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('', views.index),
-    path('api/meals/', views.mealsView.as_view()),
+    path('', index),
+    path('api/meals/', MealsView.as_view()),
+    path('api/ingredients/', IngredientsView.as_view()),
 ]
