@@ -1,11 +1,12 @@
 from django.urls import path, include
-from .views import MealsView, IngredientsView, index
+from .views import MealsListView, IngredientsListView, MealsDetailView, IngredientsDetailView
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 
 urlpatterns = [
-    path('', index),
-    path('api/meals/', MealsView.as_view()),
-    path('api/ingredients/', IngredientsView.as_view()),
+    path('meals/', MealsListView.as_view()),
+    path('meals/<int:id>', MealsDetailView.as_view()),
+    path('ingredients/', IngredientsListView.as_view()),
+    path('ingredients/<int:id>', IngredientsDetailView.as_view()),
 ]

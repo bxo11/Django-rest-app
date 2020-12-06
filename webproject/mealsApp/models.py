@@ -16,7 +16,7 @@ class Ingredients(models.Model):
     name = models.CharField(max_length=100, default="")
     amount = models.FloatField(default=0.)
     amountUnit = models.CharField(max_length=100, default="")
-    meal = models.ManyToManyField(Meals)
+    meal = models.ManyToManyField(Meals, related_name="ingredients_list")
 
     def __str__(self):
         return self.name

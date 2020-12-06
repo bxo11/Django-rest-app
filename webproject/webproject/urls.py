@@ -18,6 +18,6 @@ from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    path('', include('mealsApp.urls')),
+    path('api/', include('mealsApp.urls')),
     path('admin/', admin.site.urls),
 ]
