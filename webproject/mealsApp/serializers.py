@@ -12,17 +12,17 @@ class MealsSerializer(serializers.ModelSerializer):
 class IngredientsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredients
-        fields = '__all__'
+        exclude = ['meal']
 
 
 class IngredientsDetailSerializer(serializers.ModelSerializer):
-    # meal = serializers.PrimaryKeyRelatedField(queryset=Meals.objects.all(), many=True)
+    meal = serializers.PrimaryKeyRelatedField(queryset=Meals.objects.all(), many=True, required=False)
 
-    meal = serializers.StringRelatedField(many=True)
+    #meal = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Ingredients
-        fields = '__all__'
+        fields = ['id', 'name', 'amount', 'amountUnit', 'meal']
 
 
 class SimpleIngredientsSerializer(serializers.ModelSerializer):
@@ -36,4 +36,4 @@ class MealsDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meals
-        fields = ['name', 'category', 'instruction', 'dateAdded', 'ingredients_list']
+        fields = ['id', 'name', 'category', 'instruction', 'dateAdded', 'ingredients_list']
