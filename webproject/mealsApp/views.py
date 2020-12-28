@@ -11,10 +11,18 @@ from .models import Ingredients
 from .serializers import MealsSerializer, MealsDetailSerializer
 from .serializers import IngredientsSerializer, IngredientsDetailSerializer
 from rest_framework.decorators import api_view
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
+
+
+
 class MealsListView(APIView):
+    
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticated]
 
     def get(self, request):
         meals1 = Meals.objects.all()
@@ -30,6 +38,9 @@ class MealsListView(APIView):
 
 
 class MealsDetailView(APIView):
+    
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticated]
 
     def get_object(self, id):
         try:
@@ -56,6 +67,10 @@ class MealsDetailView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class IngredientsListView(APIView):
+    
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticated]
+    
     def get(self, request):
         ingredients1 = Ingredients.objects.all()
         serializer = IngredientsSerializer(ingredients1, many=True)
@@ -70,6 +85,9 @@ class IngredientsListView(APIView):
 
 
 class IngredientsDetailView(APIView):
+    
+    authentication_classes = [TokenAuthentication]
+    permission_classes     = [IsAuthenticated]
 
     def get_object(self, id):
         try:
