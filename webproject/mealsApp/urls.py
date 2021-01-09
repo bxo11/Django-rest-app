@@ -9,4 +9,5 @@ urlpatterns = [
     path('meals/<int:id>', MealsDetailView.as_view()),
     path('ingredients/', IngredientsListView.as_view()),
     path('ingredients/<int:id>', IngredientsDetailView.as_view()),
+    path('accounts/', include('accounts.urls')),
 ]
