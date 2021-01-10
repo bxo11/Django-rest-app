@@ -1,3 +1,4 @@
+import emoji
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.admin import ModelAdmin
@@ -40,6 +41,9 @@ class UsersSerializer(serializers.Serializer):
     def validate(self, data):
         if data["password1"] != data["password2"]:
             raise serializers.ValidationError("Both password fields didn't match.")
+        if emoji.emoji_count(data["password1"]):
+            raise serializers.ValidationError("Password can not contain emoji.")
+        
         return data
     
     
@@ -90,6 +94,9 @@ class AdminsSerializer(serializers.Serializer):
     def validate(self, data):
         if data["password1"] != data["password2"]:
             raise serializers.ValidationError("Both password fields didn't match.")
+        if emoji.emoji_count(data["password1"]):
+            raise serializers.ValidationError("Password can not contain emoji.")
+        
         return data
     
     
