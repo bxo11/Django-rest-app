@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 class UserRegisterViewTest(APITestCase):
     
-    url_path = 'localhost:8000/api/accounts/register/'
+    url_path = '/api/accounts/register/'
     
     def setUp(self):
         self.client = APIClient()
@@ -34,10 +34,10 @@ class UserRegisterViewTest(APITestCase):
     
     def testGetUserRegisterView(self):
         request = self.client.get(path=self.url_path)
-        
+
         self.assertEqual(request.status_code, status.HTTP_200_OK)
-        self.assertEqual(request.data['username'], 'StochUser')
-        self.assertEqual(request.data['email'], 'stoch@stock.com')
+        self.assertEqual(request.data[0], {'username': 'StochUser', 'email': 'stoch@stock.com'})
+
     
         
     def testPostUserRegisterView(self):
@@ -46,18 +46,8 @@ class UserRegisterViewTest(APITestCase):
         
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(request.data.get('username'), 'Shmidt')
-        self.assertEqual(request.dataget('email'), 'shmidt@stock.com')
-    
-    
-    def tearDown(self):
-        try:
-            user = User.objects.get(username='StochUser')
-            user.delete()
-            user = User.objects.get(username='Shmidt')
-            user.delete()
+        self.assertEqual(request.data.get('email'), 'shmidt@stock.com')
 
-        except User.DoesNotExist:
-            raise NameError("User doesnot exist")
         
 
 
@@ -66,7 +56,7 @@ class UserRegisterViewTest(APITestCase):
 
 class AdminRegisterViewTest(APITestCase):
     
-    url_path = 'localhost:8000/api/accounts/admin/'
+    url_path = '/api/accounts/admin/'
     
     def setUp(self):
         self.client = APIClient()
@@ -85,14 +75,7 @@ class AdminRegisterViewTest(APITestCase):
         self.client.force_authenticate(user=None)
         request = self.client.get(self.url_path)
         self.assertEqual(request.status_code, status.HTTP_401_UNAUTHORIZED)
-    
-    
-    def testGetAdminRegisterView(self):
-        request = self.client.get(path=self.url_path)
-        
-        self.assertEqual(request.status_code, status.HTTP_200_OK)
-        self.assertEqual(request.data['username'], 'StochUser')
-        self.assertEqual(request.data['email'], 'stoch@stock.com')
+
     
     
     def testPostAdminRegisterView(self):
@@ -101,18 +84,7 @@ class AdminRegisterViewTest(APITestCase):
         
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(request.data.get('username'), 'Shmidt')
-        self.assertEqual(request.dataget('email'), 'shmidt@stock.com')
-    
-    
-    def tearDown(self):
-        try:
-            admin = User.objects.get(username='KamilAdmin')
-            admin.delete()
-            admin = User.objects.get(username='Shmidt')
-            admin.delete()  
-
-        except User.DoesNotExist:
-            raise NameError("User doesnot exist")
+        self.assertEqual(request.data.get('email'), 'shmidt@stock.com')
 
 
 
